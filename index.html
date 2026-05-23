@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scorpion Party of India — Sting of Truth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --deep: #0d0d0d;
+    --surface: #111111;
+    --card: #161616;
+    --amber: #f5a623;
+    --amber-dim: #c4841a;
+    --amber-glow: #ffbf00;
+    --red: #e63946;
+    --muted: #888;
+    --text: #e8e0d0;
+    --text-dim: #aaa;
+    --border: #2a2a2a;
+    --border-amber: rgba(245,166,35,0.3);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* SCANLINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(8,8,8,0.92);
+    border-bottom: 1px solid var(--border-amber);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    color: var(--amber);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-logo .scorpion-icon { font-size: 1.8rem; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--amber); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 60%, rgba(245,166,35,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 20% 20%, rgba(230,57,70,0.04) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,166,35,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,166,35,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .scorpion-svg-hero {
+    width: 220px;
+    height: 220px;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(245,166,35,0.4));
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+  }
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    position: relative; z-index: 1;
+    border: 1px solid var(--border-amber);
+    padding: 4px 16px;
+    display: inline-block;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: 4px;
+    color: var(--text);
+    position: relative; z-index: 1;
+    margin-bottom: 0.5rem;
+  }
+  .hero-title span { color: var(--amber); }
+  .hero-subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    position: relative; z-index: 1;
+    text-transform: uppercase;
+  }
+  .hero-desc {
+    max-width: 560px;
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    margin-bottom: 2.5rem;
+    position: relative; z-index: 1;
+    font-weight: 600;
+    line-height: 1.7;
+  }
+  .hero-desc em { color: var(--amber); font-style: normal; }
+  .hero-btns { display: flex; gap: 1rem; position: relative; z-index: 1; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: var(--amber);
+    color: #000;
+    padding: 12px 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .btn-primary:hover { background: var(--amber-glow); transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--amber);
+    padding: 12px 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    border: 1px solid var(--border-amber);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { background: rgba(245,166,35,0.08); }
+
+  /* PARTY COMPARISON */
+  .section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 5px;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-amber);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    letter-spacing: 3px;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2.5rem;
+    font-size: 0.9rem;
+  }
+  .compare-table th {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    padding: 1rem 1.2rem;
+    border-bottom: 2px solid var(--border);
+    text-align: center;
+  }
+  .compare-table th.us { color: var(--amber); border-bottom-color: var(--amber); }
+  .compare-table td {
+    padding: 0.9rem 1.2rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    font-weight: 600;
+    text-align: center;
+    vertical-align: top;
+  }
+  .compare-table td:first-child { text-align: left; color: var(--text); font-weight: 700; }
+  .compare-table td.us { color: var(--amber); }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .tag-bad {
+    display: inline-block;
+    background: rgba(230,57,70,0.12);
+    color: #e66;
+    border: 1px solid rgba(230,57,70,0.3);
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+  }
+  .tag-good {
+    display: inline-block;
+    background: rgba(245,166,35,0.1);
+    color: var(--amber);
+    border: 1px solid var(--border-amber);
+    padding: 2px 10px;
+    font-size: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+  }
+
+  /* IDEOLOGY SECTION */
+  #ideology { background: var(--deep); padding: 6rem 2rem; }
+  .ideology-inner { max-width: 1100px; margin: 0 auto; }
+  .ideology-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5px;
+    margin-top: 3rem;
+    background: var(--border);
+  }
+  .ideology-card {
+    background: var(--surface);
+    padding: 2rem 1.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .ideology-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--amber);
+    transition: height 0.3s;
+  }
+  .ideology-card:hover::before { height: 100%; }
+  .ideology-card:hover { background: var(--card); }
+  .ideology-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: rgba(245,166,35,0.15);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+  }
+  .ideology-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    color: var(--amber);
+    margin-bottom: 0.8rem;
+  }
+  .ideology-text { color: var(--text-dim); font-size: 0.95rem; line-height: 1.7; font-weight: 600; }
+
+  /* PROTEST GALLERY */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin-top: 2.5rem;
+    background: var(--border);
+  }
+  .gallery-item {
+    background: var(--surface);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-item svg { width: 100%; height: 100%; }
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.8);
+    padding: 8px 12px;
+    font-size: 0.7rem;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+    color: var(--amber);
+    text-transform: uppercase;
+  }
+
+  /* VOTE SECTION */
+  #vote-section { padding: 6rem 2rem; background: var(--black); }
+  .vote-inner { max-width: 1100px; margin: 0 auto; }
+
+  .vote-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--amber);
+    padding: 1.8rem 2rem;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .vote-card:hover { border-color: var(--amber); }
+  .vote-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .vote-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    color: var(--text);
+  }
+  .vote-card-body {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+    font-weight: 600;
+    line-height: 1.7;
+  }
+  .vote-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .vote-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 18px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+  }
+  .vote-btn:hover { border-color: var(--amber); color: var(--amber); }
+  .vote-btn.liked { border-color: var(--amber); color: var(--amber); background: rgba(245,166,35,0.08); }
+  .vote-btn.disliked { border-color: var(--red); color: var(--red); background: rgba(230,57,70,0.08); }
+  .vote-count { font-weight: 700; }
+  .vote-bar {
+    height: 3px;
+    background: var(--border);
+    margin-top: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .vote-bar-fill {
+    height: 100%;
+    background: var(--amber);
+    transition: width 0.5s ease;
+  }
+
+  /* MANIFESTO TICKER */
+  .ticker {
+    background: var(--amber);
+    color: #000;
+    padding: 8px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 30s linear infinite;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    font-weight: 700;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(100vw); }
+    100% { transform: translateX(-100%); }
+  }
+
+  /* SCORPION MANIFESTO BOX */
+  .manifesto-box {
+    background: var(--card);
+    border: 1px solid var(--border-amber);
+    padding: 3rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .manifesto-box::before {
+    content: '"';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 8rem;
+    color: rgba(245,166,35,0.08);
+    position: absolute;
+    top: -1rem;
+    left: 2rem;
+    line-height: 1;
+  }
+  .manifesto-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 2;
+    color: var(--text-dim);
+    position: relative;
+    z-index: 1;
+  }
+  .manifesto-text strong { color: var(--amber); }
+
+  /* FOOTER */
+  footer {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .footer-inner { max-width: 700px; margin: 0 auto; }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    color: var(--amber);
+    margin-bottom: 1rem;
+  }
+  .footer-disclaimer {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    line-height: 2;
+    margin-bottom: 1rem;
+  }
+  .footer-disclaimer strong { color: var(--amber); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 0 1.2rem; }
+    .nav-links { display: none; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .compare-table { font-size: 0.78rem; }
+    .compare-table th, .compare-table td { padding: 0.6rem 0.6rem; }
+    .manifesto-box { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="scorpion-icon">🦂</span> SCORPION PARTY
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#compare">Vs Them</a></li>
+    <li><a href="#ideology">Ideology</a></li>
+    <li><a href="#protest">Protest Art</a></li>
+    <li><a href="#vote-section">Vote</a></li>
+  </ul>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker" style="margin-top:60px">
+  <span class="ticker-inner">
+    &nbsp;&nbsp;&nbsp;&nbsp; STING OF TRUTH &nbsp;✦&nbsp; NO VIP CULTURE &nbsp;✦&nbsp; ZERO CORRUPTION &nbsp;✦&nbsp; YOUTH FIRST &nbsp;✦&nbsp; STRONG JUSTICE &nbsp;✦&nbsp; NO PAPER LEAKS &nbsp;✦&nbsp; DEVELOPMENT OVER DRAMA &nbsp;✦&nbsp; WE STING EQUALLY &nbsp;✦&nbsp; BJP, INC, CJP — WE SEE YOU &nbsp;✦&nbsp;
+  </span>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <!-- SCORPION SVG -->
+  <svg class="scorpion-svg-hero" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Body -->
+    <ellipse cx="100" cy="115" rx="28" ry="38" fill="#f5a623" opacity="0.9"/>
+    <!-- Head -->
+    <ellipse cx="100" cy="75" rx="20" ry="16" fill="#f5a623"/>
+    <!-- Eyes -->
+    <circle cx="93" cy="71" r="3.5" fill="#0d0d0d"/>
+    <circle cx="107" cy="71" r="3.5" fill="#0d0d0d"/>
+    <circle cx="94" cy="70" r="1.2" fill="#ffbf00"/>
+    <circle cx="108" cy="70" r="1.2" fill="#ffbf00"/>
+    <!-- Claws left -->
+    <line x1="80" y1="85" x2="55" y2="72" stroke="#f5a623" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="48" cy="68" rx="10" ry="6" fill="#f5a623" transform="rotate(-20 48 68)"/>
+    <ellipse cx="43" cy="74" rx="8" ry="5" fill="#f5a623" transform="rotate(25 43 74)"/>
+    <!-- Claws right -->
+    <line x1="120" y1="85" x2="145" y2="72" stroke="#f5a623" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="152" cy="68" rx="10" ry="6" fill="#f5a623" transform="rotate(20 152 68)"/>
+    <ellipse cx="157" cy="74" rx="8" ry="5" fill="#f5a623" transform="rotate(-25 157 74)"/>
+    <!-- Legs left -->
+    <line x1="78" y1="100" x2="52" y2="95" stroke="#f5a623" stroke-width="3" stroke-linecap="round"/>
+    <line x1="76" y1="112" x2="50" y2="110" stroke="#f5a623" stroke-width="3" stroke-linecap="round"/>
+    <line x1="78" y1="123" x2="53" y2="125" stroke="#f5a623" stroke-width="3" stroke-linecap="round"/>
+    <line x1="82" y1="133" x2="58" y2="138" stroke="#f5a623" stroke-width="3" stroke-linecap="round"/>
+    <!-- Legs right -->
+    <line x1="122" y1="100" x2="148" y2="95" stroke="#f5a623" stroke-width="3" stroke-linecap="round"/>
+    <line x1="124" y1="112" x2="150" y2="110" stroke="#f5a623" stroke-width="3" stroke-linecap="round"/>
+    <line x1="122" y1="123" x2="147" y2="125" stroke="#f5a623" stroke-width="3" stroke-linecap="round"/>
+    <line x1="118" y1="133" x2="142" y2="138" stroke="#f5a623" stroke-width="3" stroke-linecap="round"/>
+    <!-- Tail segments -->
+    <ellipse cx="100" cy="155" rx="12" ry="9" fill="#c4841a"/>
+    <ellipse cx="100" cy="170" rx="10" ry="8" fill="#c4841a"/>
+    <ellipse cx="100" cy="184" rx="8" ry="6" fill="#c4841a"/>
+    <!-- Stinger -->
+    <path d="M100 190 Q112 196 108 186" stroke="#e63946" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="110" cy="185" r="4" fill="#e63946"/>
+    <!-- Crown -->
+    <polygon points="88,62 92,52 96,60 100,48 104,60 108,52 112,62" fill="#ffbf00"/>
+  </svg>
+
+  <div class="hero-tag">🦂 Registered Satire · Est. 2025 · India</div>
+  <h1 class="hero-title">SCORPION<br><span>PARTY</span><br>OF INDIA</h1>
+  <p class="hero-subtitle">— Sting of Truth. Venom of Accountability. —</p>
+  <p class="hero-desc">
+    When <em>BJP</em>, <em>INC</em>, and <em>CJP</em> play politics with your future,
+    the Scorpion doesn't clap. It <em>stings</em>. Equal venom. No VIP queue.
+  </p>
+  <div class="hero-btns">
+    <a href="#ideology" class="btn-primary">Our Ideology</a>
+    <a href="#vote-section" class="btn-ghost">Vote on Ideas</a>
+  </div>
+</section>
+
+<!-- COMPARE SECTION -->
+<div id="compare">
+<div class="section">
+  <div class="section-label">The Arena</div>
+  <h2 class="section-title">US vs <span style="color:var(--red)">THEM</span></h2>
+  <p style="color:var(--text-dim); max-width:580px; font-weight:600; margin-bottom:0.5rem">
+    BJP promises Ram Mandir. INC promises Rahul. CJP promises to be victim of both.
+    We promise <strong style="color:var(--amber)">none of that circus.</strong>
+  </p>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th style="text-align:left; color:var(--muted)">Issue</th>
+        <th style="color:#ff9933">BJP 🪷</th>
+        <th style="color:#19a0dc">INC ✋</th>
+        <th style="color:#228b22">CJP ⚖️</th>
+        <th class="us">🦂 Scorpion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Corruption</td>
+        <td><span class="tag-bad">Selective outrage</span></td>
+        <td><span class="tag-bad">National hobby</span></td>
+        <td><span class="tag-bad">Tweet & forget</span></td>
+        <td class="us"><span class="tag-good">Zero. Full stop.</span></td>
+      </tr>
+      <tr>
+        <td>VIP Culture</td>
+        <td><span class="tag-bad">Z+ security for MLAs</span></td>
+        <td><span class="tag-bad">Dynasty first</span></td>
+        <td><span class="tag-bad">Activists get passes</span></td>
+        <td class="us"><span class="tag-good">No queue-jumping</span></td>
+      </tr>
+      <tr>
+        <td>Youth & Exams</td>
+        <td><span class="tag-bad">NEET leaks, celebrate</span></td>
+        <td><span class="tag-bad">Promise, forget</span></td>
+        <td><span class="tag-bad">Press release only</span></td>
+        <td class="us"><span class="tag-good">Heads roll</span></td>
+      </tr>
+      <tr>
+        <td>Justice speed</td>
+        <td><span class="tag-bad">Courts for opponents</span></td>
+        <td><span class="tag-bad">Decades in bail</span></td>
+        <td><span class="tag-bad">Slow = drama fuel</span></td>
+        <td class="us"><span class="tag-good">Time-bound law</span></td>
+      </tr>
+      <tr>
+        <td>Accountability</td>
+        <td><span class="tag-bad">Godman immunity</span></td>
+        <td><span class="tag-bad">Family immunity</span></td>
+        <td><span class="tag-bad">NGO immunity</span></td>
+        <td class="us"><span class="tag-good">Everyone stung equally</span></td>
+      </tr>
+      <tr>
+        <td>Trend politics</td>
+        <td><span class="tag-bad">Whatsapp University</span></td>
+        <td><span class="tag-bad">Bharat Jodo selfies</span></td>
+        <td><span class="tag-bad">Twitter threads ∞</span></td>
+        <td class="us"><span class="tag-good">Action or silence</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<!-- IDEOLOGY SECTION -->
+<section id="ideology">
+<div class="ideology-inner">
+  <div class="section-label">The Manifesto</div>
+  <h2 class="section-title">OUR <span style="color:var(--amber)">IDEOLOGY</span></h2>
+  <p style="color:var(--text-dim); max-width:580px; font-weight:600; margin-bottom:0;">
+    Seven principles. No asterisks. No fine print. No "conditions apply." The scorpion's venom is honest — it doesn't discriminate.
+  </p>
+
+  <div class="ideology-grid">
+
+    <div class="ideology-card">
+      <div class="ideology-num">01</div>
+      <div class="ideology-title">Zero Corruption Tolerance</div>
+      <p class="ideology-text">No excuses. No "coalition compulsion." Any leader caught in corruption is removed and punished. The scorpion doesn't negotiate with the infection — it removes it.</p>
+    </div>
+
+    <div class="ideology-card">
+      <div class="ideology-num">02</div>
+      <div class="ideology-title">Equal Accountability</div>
+      <p class="ideology-text">No VIP culture. No "senior neta" discount. Every party, every leader, every godman — questioned equally. The stinger doesn't check your party card before striking.</p>
+    </div>
+
+    <div class="ideology-card">
+      <div class="ideology-num">03</div>
+      <div class="ideology-title">Youth First</div>
+      <p class="ideology-text">No paper leaks. No exam delays. No fake promises with folded hands at rallies. Students' time is not a campaign prop. Respect it or face the sting.</p>
+    </div>
+
+    <div class="ideology-card">
+      <div class="ideology-num">04</div>
+      <div class="ideology-title">Development Over Drama</div>
+      <p class="ideology-text">Infrastructure, healthcare, jobs — these are not "boring." Political fights, manufactured controversies, and prime-time screaming matches are. We choose boring.</p>
+    </div>
+
+    <div class="ideology-card">
+      <div class="ideology-num">05</div>
+      <div class="ideology-title">Civic Sense as Education</div>
+      <p class="ideology-text">Traffic rules. Law awareness. Public responsibility. Teach it in schools. A nation that doesn't respect shared spaces can't expect shared progress.</p>
+    </div>
+
+    <div class="ideology-card">
+      <div class="ideology-num">06</div>
+      <div class="ideology-title">Fast & Strong Justice</div>
+      <p class="ideology-text">Time-bound courts. Death penalty for crimes involving children — no loopholes, no bail tourism. Justice delayed is justice sold to the highest bidder.</p>
+    </div>
+
+    <div class="ideology-card">
+      <div class="ideology-num">07</div>
+      <div class="ideology-title">No Trend Politics</div>
+      <p class="ideology-text">Serious national issues are not for clout, memes, or 48-hour hype cycles. If you have no solution and no action — you have no platform. Silence is better than noise.</p>
+    </div>
+
+  </div>
+
+  <div class="manifesto-box">
+    <p class="manifesto-text">
+      "We do not promise <strong>Ram Mandir 2.0</strong>, a <strong>bharat jodo yatra season 3</strong>, or another <strong>PIL about a meme</strong>.
+      We promise to be the party that <strong>actually reads the bills before voting on them</strong>.
+      A radical concept in Indian politics. <strong>The scorpion doesn't hype. It stings.</strong>"
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- PROTEST ART SECTION -->
+<div id="protest">
+<div class="section">
+  <div class="section-label">Protest Art</div>
+  <h2 class="section-title">THE <span style="color:var(--amber)">SCORPION</span> RISES</h2>
+  <p style="color:var(--text-dim); max-width:580px; font-weight:600; margin-bottom:0">
+    When the mic is controlled, art speaks. Scorpion protest art for a futuristic India where accountability isn't optional.
+  </p>
+
+  <div class="gallery-grid">
+
+    <!-- Art 1: Scorpion vs Lotus -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="300" height="300" fill="#0a0a0a"/>
+        <!-- Grid -->
+        <line x1="0" y1="150" x2="300" y2="150" stroke="#f5a62322" stroke-width="1"/>
+        <line x1="150" y1="0" x2="150" y2="300" stroke="#f5a62322" stroke-width="1"/>
+        <!-- Crushed lotus symbol -->
+        <circle cx="150" cy="200" r="50" fill="#ff993322" stroke="#ff9933" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="150" y="208" text-anchor="middle" font-size="36" fill="#ff9933" opacity="0.5">🪷</text>
+        <!-- Scorpion foot on it -->
+        <path d="M120 185 Q150 165 180 185" stroke="#f5a623" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Scorpion body above -->
+        <ellipse cx="150" cy="140" rx="22" ry="30" fill="#f5a623"/>
+        <ellipse cx="150" cy="108" rx="16" ry="13" fill="#f5a623"/>
+        <circle cx="143" cy="104" r="3" fill="#000"/>
+        <circle cx="157" cy="104" r="3" fill="#000"/>
+        <!-- Claws -->
+        <line x1="134" y1="118" x2="112" y2="108" stroke="#f5a623" stroke-width="4" stroke-linecap="round"/>
+        <ellipse cx="107" cy="104" rx="8" ry="5" fill="#f5a623" transform="rotate(-15 107 104)"/>
+        <line x1="166" y1="118" x2="188" y2="108" stroke="#f5a623" stroke-width="4" stroke-linecap="round"/>
+        <ellipse cx="193" cy="104" rx="8" ry="5" fill="#f5a623" transform="rotate(15 193 104)"/>
+        <!-- Stinger tail -->
+        <path d="M150 170 Q150 190 145 195 Q138 200 142 205" stroke="#e63946" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="143" cy="207" r="4" fill="#e63946"/>
+        <!-- Text -->
+        <text x="150" y="270" text-anchor="middle" font-family="'Courier New'" font-size="9" fill="#f5a623" letter-spacing="3" text-transform="uppercase">STING OF TRUTH</text>
+      </svg>
+      <div class="gallery-caption">Scorpion vs BJP Lotus</div>
+    </div>
+
+    <!-- Art 2: Futuristic India -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="300" height="300" fill="#050510"/>
+        <!-- City horizon -->
+        <rect x="20" y="200" width="30" height="80" fill="#1a1a2e"/>
+        <rect x="55" y="175" width="25" height="105" fill="#16213e"/>
+        <rect x="85" y="185" width="20" height="95" fill="#1a1a2e"/>
+        <rect x="190" y="180" width="35" height="100" fill="#16213e"/>
+        <rect x="230" y="165" width="28" height="115" fill="#1a1a2e"/>
+        <rect x="262" y="190" width="22" height="90" fill="#16213e"/>
+        <!-- City lights -->
+        <circle cx="33" cy="205" r="1.5" fill="#f5a623" opacity="0.8"/>
+        <circle cx="67" cy="182" r="1.5" fill="#f5a623" opacity="0.8"/>
+        <circle cx="95" cy="192" r="1.5" fill="#f5a623" opacity="0.6"/>
+        <circle cx="207" cy="185" r="1.5" fill="#f5a623" opacity="0.8"/>
+        <circle cx="244" cy="170" r="1.5" fill="#f5a623" opacity="0.6"/>
+        <!-- Sun/amber orb -->
+        <circle cx="150" cy="140" r="55" fill="#f5a62308" stroke="#f5a623" stroke-width="0.5"/>
+        <circle cx="150" cy="140" r="38" fill="#f5a62312" stroke="#f5a623" stroke-width="0.5"/>
+        <circle cx="150" cy="140" r="22" fill="#f5a62325"/>
+        <text x="150" y="148" text-anchor="middle" font-size="22" fill="#f5a623">🦂</text>
+        <!-- Orbit line -->
+        <ellipse cx="150" cy="140" rx="70" ry="20" stroke="#f5a62333" stroke-width="1" fill="none" stroke-dasharray="3 4"/>
+        <!-- Stars -->
+        <circle cx="40" cy="40" r="1" fill="white" opacity="0.6"/>
+        <circle cx="80" cy="25" r="1" fill="white" opacity="0.4"/>
+        <circle cx="200" cy="50" r="1.5" fill="white" opacity="0.7"/>
+        <circle cx="260" cy="30" r="1" fill="white" opacity="0.5"/>
+        <circle cx="30" cy="100" r="1" fill="white" opacity="0.4"/>
+        <circle cx="270" cy="90" r="1.5" fill="white" opacity="0.6"/>
+        <text x="150" y="285" text-anchor="middle" font-family="'Courier New'" font-size="8" fill="#f5a623" letter-spacing="3">SCORPION DOMINANCE</text>
+      </svg>
+      <div class="gallery-caption">Futuristic India 2047</div>
+    </div>
+
+    <!-- Art 3: Equal Sting -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="300" height="300" fill="#0d0000"/>
+        <!-- Three party symbols being stung -->
+        <!-- BJP -->
+        <circle cx="80" cy="130" r="35" fill="#ff993315" stroke="#ff9933" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="80" y="134" text-anchor="middle" font-size="28" opacity="0.6">🪷</text>
+        <!-- INC -->
+        <circle cx="150" cy="130" r="35" fill="#19a0dc15" stroke="#19a0dc" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="150" y="134" text-anchor="middle" font-size="28" opacity="0.6">✋</text>
+        <!-- CJP -->
+        <circle cx="220" cy="130" r="35" fill="#228b2215" stroke="#228b22" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="220" y="134" text-anchor="middle" font-size="28" opacity="0.6">⚖️</text>
+        <!-- Scorpion above, equal stingers pointing down -->
+        <ellipse cx="150" cy="55" rx="20" ry="15" fill="#f5a623"/>
+        <ellipse cx="150" cy="38" rx="14" ry="11" fill="#f5a623"/>
+        <!-- Sting lines to each party -->
+        <line x1="137" y1="62" x2="90" y2="100" stroke="#e63946" stroke-width="2" stroke-linecap="round"/>
+        <line x1="150" y1="70" x2="150" y2="100" stroke="#e63946" stroke-width="2" stroke-linecap="round"/>
+        <line x1="163" y1="62" x2="210" y2="100" stroke="#e63946" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="90" cy="102" r="4" fill="#e63946"/>
+        <circle cx="150" cy="102" r="4" fill="#e63946"/>
+        <circle cx="210" cy="102" r="4" fill="#e63946"/>
+        <!-- Eyes -->
+        <circle cx="145" cy="35" r="2.5" fill="#0d0d0d"/>
+        <circle cx="155" cy="35" r="2.5" fill="#0d0d0d"/>
+        <!-- Label -->
+        <text x="150" y="220" text-anchor="middle" font-family="'Courier New'" font-size="11" fill="#e63946" font-weight="bold" letter-spacing="1">WE STING EQUALLY</text>
+        <text x="150" y="238" text-anchor="middle" font-family="'Courier New'" font-size="7.5" fill="#f5a623" letter-spacing="2">NO VIP · NO EXCEPTIONS</text>
+      </svg>
+      <div class="gallery-caption">Equal Accountability</div>
+    </div>
+
+    <!-- Art 4: Youth Rising -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="300" height="300" fill="#000d0d"/>
+        <!-- Fist raised -->
+        <rect x="125" y="100" width="50" height="130" rx="8" fill="#f5a623" opacity="0.85"/>
+        <rect x="120" y="110" width="15" height="60" rx="6" fill="#f5a623"/>
+        <rect x="165" y="110" width="15" height="60" rx="6" fill="#f5a623"/>
+        <rect x="125" y="90" width="50" height="30" rx="8" fill="#f5a623"/>
+        <!-- Finger tops -->
+        <rect x="128" y="82" width="11" height="16" rx="5" fill="#f5a623"/>
+        <rect x="141" y="79" width="11" height="18" rx="5" fill="#f5a623"/>
+        <rect x="154" y="81" width="11" height="16" rx="5" fill="#f5a623"/>
+        <!-- Scorpion stinger coming from fist -->
+        <path d="M175 95 Q195 75 185 58" stroke="#e63946" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="184" cy="56" r="5" fill="#e63946"/>
+        <!-- Glow rings -->
+        <circle cx="150" cy="165" r="80" fill="none" stroke="#f5a62318" stroke-width="1"/>
+        <circle cx="150" cy="165" r="95" fill="none" stroke="#f5a62310" stroke-width="1"/>
+        <text x="150" y="262" text-anchor="middle" font-family="'Courier New'" font-size="9" fill="#f5a623" letter-spacing="3">YOUTH FIRST · ALWAYS</text>
+        <text x="150" y="278" text-anchor="middle" font-family="'Courier New'" font-size="7" fill="#888" letter-spacing="2">NO PAPER LEAKS. NO DELAYS.</text>
+      </svg>
+      <div class="gallery-caption">Youth Power</div>
+    </div>
+
+    <!-- Art 5: Scorpion vs Corruption -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="300" height="300" fill="#080000"/>
+        <!-- Corruption bag of money with X -->
+        <ellipse cx="150" cy="200" rx="55" ry="45" fill="#e6394620" stroke="#e63946" stroke-width="1.5"/>
+        <text x="150" y="210" text-anchor="middle" font-size="36" opacity="0.7">💰</text>
+        <line x1="115" y1="165" x2="185" y2="235" stroke="#e63946" stroke-width="4" stroke-linecap="round"/>
+        <line x1="185" y1="165" x2="115" y2="235" stroke="#e63946" stroke-width="4" stroke-linecap="round"/>
+        <!-- Scorpion above -->
+        <ellipse cx="150" cy="95" rx="25" ry="32" fill="#f5a623"/>
+        <ellipse cx="150" cy="62" rx="18" ry="15" fill="#f5a623"/>
+        <circle cx="143" cy="58" r="3" fill="#000"/>
+        <circle cx="157" cy="58" r="3" fill="#000"/>
+        <!-- Pincers -->
+        <line x1="132" y1="73" x2="108" y2="60" stroke="#f5a623" stroke-width="5" stroke-linecap="round"/>
+        <ellipse cx="103" cy="57" rx="9" ry="5.5" fill="#f5a623" transform="rotate(-15 103 57)"/>
+        <line x1="168" y1="73" x2="192" y2="60" stroke="#f5a623" stroke-width="5" stroke-linecap="round"/>
+        <ellipse cx="197" cy="57" rx="9" ry="5.5" fill="#f5a623" transform="rotate(15 197 57)"/>
+        <!-- Legs -->
+        <line x1="130" y1="90" x2="108" y2="82" stroke="#f5a623" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="128" y1="102" x2="106" y2="98" stroke="#f5a623" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="170" y1="90" x2="192" y2="82" stroke="#f5a623" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="172" y1="102" x2="194" y2="98" stroke="#f5a623" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Stinger toward corruption -->
+        <path d="M150 127 Q150 148 147 155 Q143 162 146 168" stroke="#e63946" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <circle cx="147" cy="170" r="5" fill="#e63946"/>
+        <text x="150" y="278" text-anchor="middle" font-family="'Courier New'" font-size="8.5" fill="#f5a623" letter-spacing="3">ZERO TOLERANCE</text>
+      </svg>
+      <div class="gallery-caption">Scorpion vs Corruption</div>
+    </div>
+
+    <!-- Art 6: Future Vision -->
+    <div class="gallery-item">
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="300" height="300" fill="#000508"/>
+        <!-- Earth -->
+        <circle cx="150" cy="175" r="65" fill="#0a1628" stroke="#f5a62340" stroke-width="1"/>
+        <ellipse cx="150" cy="175" rx="65" ry="18" fill="none" stroke="#f5a62340" stroke-width="1" stroke-dasharray="4 4"/>
+        <!-- Continents suggestion -->
+        <ellipse cx="135" cy="165" rx="18" ry="22" fill="#1a3a1a" opacity="0.6"/>
+        <ellipse cx="168" cy="175" rx="14" ry="18" fill="#1a3a1a" opacity="0.5"/>
+        <ellipse cx="148" cy="195" rx="20" ry="12" fill="#1a3a1a" opacity="0.5"/>
+        <!-- Orbit ring -->
+        <ellipse cx="150" cy="175" rx="90" ry="25" fill="none" stroke="#f5a62322" stroke-width="1.5"/>
+        <!-- Scorpion orbiting -->
+        <g transform="translate(60, 152)">
+          <ellipse cx="0" cy="0" rx="9" ry="12" fill="#f5a623"/>
+          <ellipse cx="0" cy="-14" rx="6" ry="5" fill="#f5a623"/>
+          <circle cx="-3" cy="-16" r="1.5" fill="#000"/>
+          <circle cx="3" cy="-16" r="1.5" fill="#000"/>
+          <path d="M0 12 Q0 18 -3 20" stroke="#e63946" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <circle cx="-3" cy="21" r="2.5" fill="#e63946"/>
+        </g>
+        <!-- Stars -->
+        <circle cx="30" cy="30" r="1" fill="white" opacity="0.7"/>
+        <circle cx="270" cy="40" r="1.2" fill="white" opacity="0.6"/>
+        <circle cx="60" cy="60" r="0.8" fill="white" opacity="0.5"/>
+        <circle cx="240" cy="70" r="1" fill="white" opacity="0.7"/>
+        <circle cx="20" cy="100" r="0.8" fill="white" opacity="0.4"/>
+        <circle cx="280" cy="110" r="1" fill="white" opacity="0.6"/>
+        <!-- Text -->
+        <text x="150" y="40" text-anchor="middle" font-family="'Courier New'" font-size="9" fill="#f5a623" letter-spacing="3">THE SCORPION CAN</text>
+        <text x="150" y="56" text-anchor="middle" font-family="'Courier New'" font-size="9" fill="#f5a623" letter-spacing="3">MAKE THE WORLD</text>
+        <text x="150" y="72" text-anchor="middle" font-family="'Courier New'" font-size="11" fill="#ffbf00" letter-spacing="4" font-weight="bold">FUTURISTIC</text>
+        <text x="150" y="270" text-anchor="middle" font-family="'Courier New'" font-size="7.5" fill="#888" letter-spacing="2">INDIA 2047 · VISION SCORPION</text>
+      </svg>
+      <div class="gallery-caption">Scorpion World Order</div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- VOTE / IDEOLOGY PAGE -->
+<section id="vote-section">
+<div class="vote-inner">
+  <div class="section-label" style="padding-top:0; margin-bottom:1rem">People's Verdict</div>
+  <h2 class="section-title" style="margin-bottom:0.5rem">VOTE ON OUR <span style="color:var(--amber)">IDEAS</span></h2>
+  <p style="color:var(--text-dim); max-width:580px; font-weight:600; margin-bottom:2.5rem">
+    Unlike BJP's app-based clap counter or INC's WhatsApp polls, we let you <strong style="color:var(--amber)">actually disagree</strong>.
+    React to each policy below. No fake bot likes (we hope).
+  </p>
+
+  <div id="vote-cards"></div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">🦂 SCORPION PARTY OF INDIA</div>
+    <p class="footer-disclaimer">
+      <strong>⚠️ SATIRE DISCLAIMER:</strong> This website is 100% satirical and fictional.<br>
+      The Scorpion Party of India is not a real registered political party.<br>
+      Any resemblance to actual incompetent governance is entirely coincidental and also <strong>painfully accurate</strong>.<br>
+      BJP, INC, and CJP are real parties but the opinions here are satire protected under free expression.<br>
+      No scorpions were harmed in the making of this website. Several politicians' feelings may have been.<br><br>
+      <strong>Built for laughs. Built for truth. Built for a better India 🦂</strong>
+    </p>
+    <p style="font-family:'Space Mono',monospace; font-size:0.6rem; color:#444; letter-spacing:2px; margin-top:1rem">
+      © 2025 SCORPION PARTY · SATIRE DIVISION · ALL STINGS RESERVED
+    </p>
+  </div>
+</footer>
+
+<script>
+const policies = [
+  {
+    id: 1,
+    title: "Zero Corruption Tolerance",
+    body: "Any leader caught in corruption is removed and punished. No ifs, no buts, no 'the probe is ongoing'. You stole — you're out. This includes the person who nodded at the theft.",
+    likes: 2847,
+    dislikes: 103
+  },
+  {
+    id: 2,
+    title: "No VIP Culture — Equal Treatment",
+    body: "The Health Minister waits in the same hospital queue as you. The MLA's car stops at the same red light as yours. The Supreme Court judge's kid takes the same exam your kid takes. Revolutionary, we know.",
+    likes: 3201,
+    dislikes: 87
+  },
+  {
+    id: 3,
+    title: "Youth First — No Exam Leaks, No Delays",
+    body: "Paper leaks are treason against the future. Anyone involved — from the printer to the WhatsApp-forwarder to the minister who 'didn't know' — gets tried. Students' time is national wealth.",
+    likes: 4102,
+    dislikes: 219
+  },
+  {
+    id: 4,
+    title: "Development Over Drama",
+    body: "We will bore you with infrastructure. We will put you to sleep with healthcare statistics. We will not put on a prime-time show about which ancient king liked which river. Roads > Rhetoric.",
+    likes: 2619,
+    dislikes: 445
+  },
+  {
+    id: 5,
+    title: "Civic Sense as a School Subject",
+    body: "Every class 9 student learns traffic rules, waste management, RTI filing, and what a tax invoice is. Because a country whose citizens know their rights is much harder to fool at 5pm on a news channel.",
+    likes: 1987,
+    dislikes: 312
+  },
+  {
+    id: 6,
+    title: "Time-Bound Justice — Death Penalty for Child Crimes",
+    body: "Serious crimes involving children get a time-bound court process. No 14-year bail. No 'under investigation' for 20 years. The law must be fast, and for the worst crimes against the innocent — final.",
+    likes: 5634,
+    dislikes: 891
+  },
+  {
+    id: 7,
+    title: "No Trend Politics — Action or Silence",
+    body: "We will not tweet about a flood and then go to a party. We will not hold a candle march and call it governance. If we have no solution, we say so and get out of the way. Silence > Clout.",
+    likes: 3008,
+    dislikes: 267
+  }
+];
+
+const votes = {};
+policies.forEach(p => {
+  votes[p.id] = {
+    likes: p.likes,
+    dislikes: p.dislikes,
+    myVote: null
+  };
+});
+
+function pct(id) {
+  const v = votes[id];
+  const total = v.likes + v.dislikes;
+  if (total === 0) return 50;
+  return Math.round((v.likes / total) * 100);
+}
+
+function fmt(n) {
+  if (n >= 1000) return (n/1000).toFixed(1) + 'k';
+  return n;
+}
+
+function render() {
+  const container = document.getElementById('vote-cards');
+  container.innerHTML = policies.map(p => {
+    const v = votes[p.id];
+    const liked = v.myVote === 'like';
+    const disliked = v.myVote === 'dislike';
+    return `
+      <div class="vote-card" id="card-${p.id}">
+        <div class="vote-card-header">
+          <div class="vote-card-title">${p.id.toString().padStart(2,'0')} — ${p.title}</div>
+        </div>
+        <p class="vote-card-body">${p.body}</p>
+        <div class="vote-actions">
+          <button class="vote-btn ${liked ? 'liked' : ''}" onclick="vote(${p.id}, 'like')">
+            <span>▲</span>
+            <span class="vote-count">${fmt(v.likes)}</span>
+            <span style="font-size:0.65rem;opacity:0.7">STING IT</span>
+          </button>
+          <button class="vote-btn ${disliked ? 'disliked' : ''}" onclick="vote(${p.id}, 'dislike')">
+            <span>▼</span>
+            <span class="vote-count">${fmt(v.dislikes)}</span>
+            <span style="font-size:0.65rem;opacity:0.7">DISAGREE</span>
+          </button>
+          <span style="font-size:0.7rem; color:var(--muted); font-family:'Space Mono',monospace; letter-spacing:1px; margin-left:auto">
+            ${pct(p.id)}% support
+          </span>
+        </div>
+        <div class="vote-bar">
+          <div class="vote-bar-fill" style="width:${pct(p.id)}%"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function vote(id, type) {
+  const v = votes[id];
+  if (v.myVote === type) {
+    // undo
+    if (type === 'like') v.likes--;
+    else v.dislikes--;
+    v.myVote = null;
+  } else {
+    if (v.myVote) {
+      if (v.myVote === 'like') v.likes--;
+      else v.dislikes--;
+    }
+    if (type === 'like') v.likes++;
+    else v.dislikes++;
+    v.myVote = type;
+  }
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>
